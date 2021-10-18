@@ -23,9 +23,9 @@ export class AppComponent implements OnInit {
     this.todoService.addTodo(value).subscribe((item) => this.items.push(item));
   }
 
-  deleteTodo(item: Todo): void {
-    this.todoService.deleteTodo(item).subscribe(() => {
-      this.items = this.items.filter((item) => item);
+  deleteTodo(itemToDelete: Todo): void {
+    this.todoService.deleteTodo(itemToDelete).subscribe(() => {
+      this.items = this.items.filter((item) => item.id !== itemToDelete.id);
     });
   }
 
