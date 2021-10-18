@@ -12,7 +12,6 @@ import { TodoListComponent } from './presentational/todo-list/todo-list.componen
     TodoListComponent,
     TodoFormComponent,
     TodoItemComponent,
-    TodoComponent,
   ],
   imports: [
     CommonModule,
