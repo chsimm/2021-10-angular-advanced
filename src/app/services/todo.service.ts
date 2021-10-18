@@ -12,7 +12,7 @@ export class TodoService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getAllTodos() {
+  getAllTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${environment.apiUrl}${this.url}`);
   }
 
@@ -20,12 +20,12 @@ export class TodoService {
     return this.http.post<Todo>(`${environment.apiUrl}${this.url}`, value);
   }
 
-  deleteTodo(item: Todo) {
-    return this.http.delete(`${environment.apiUrl}${this.url}${item.id}`);
+  deleteTodo(item: Todo): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}${this.url}${item.id}`);
   }
 
-  updateTodo(newItem: Todo) {
-    return this.http.put(
+  updateTodo(newItem: Todo): Observable<Todo> {
+    return this.http.put<Todo>(
       `${environment.apiUrl}${this.url}${newItem.id}`,
       newItem
     );

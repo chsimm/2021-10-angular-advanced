@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Todo } from './services/todo';
 import { TodoService } from './services/todo.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { TodoService } from './services/todo.service';
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  items: any[] = [];
+  items: Todo[] = [];
 
   constructor(private readonly todoService: TodoService) {}
 
@@ -18,24 +19,17 @@ export class AppComponent implements OnInit {
     });
   }
 
-  addTodo(value: any): void {
+  addTodo(value: Todo): void {
     this.todoService.addTodo(value).subscribe((item) => this.items.push(item));
   }
 
-  deleteTodo(item: any): void {
+  deleteTodo(item: Todo): void {
     this.todoService.deleteTodo(item).subscribe(() => {
-      for (let index = 0; index < this.items.length; index++) {
-        const element = this.items[index];
-
-        if (element.id == item.id) {
-          this.items.splice(index, 1);
-          break;
-        }
-      }
+      this.items = this.items.filter((item) => item);
     });
   }
 
-  markAsDone(item: any): void {
+  markAsDone(item: Todo): void {
     item.done = !item.done;
     this.todoService.updateTodo(item).subscribe(() => console.log('updated'));
   }
