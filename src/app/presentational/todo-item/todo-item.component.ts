@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ComponentCommunicationService } from '../../services/component-communication.service';
 
 @Component({
   selector: 'app-todo-item',
@@ -11,9 +10,7 @@ export class TodoItemComponent implements OnInit {
   @Output() markedAsDone = new EventEmitter();
   @Output() deleted = new EventEmitter();
 
-  constructor(
-    private readonly componentCommunicationService: ComponentCommunicationService
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
@@ -22,6 +19,6 @@ export class TodoItemComponent implements OnInit {
   }
 
   deleteTodo(item: any) {
-    this.componentCommunicationService.deleteTodo(item);
+    this.deleted.emit(item);
   }
 }

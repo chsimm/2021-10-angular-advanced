@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ComponentCommunicationService {
+  currentTodo$ = new BehaviorSubject(null);
   private deleteTodoSub = new Subject();
 
   get deleteTodo$() {
