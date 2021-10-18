@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ComponentCommunicationService } from './services/component-communication.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +10,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AppComponent implements OnInit {
   title = 'app';
   items: any[] = [];
-  @ViewChild('input') input: any;
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly componentCommunicationService: ComponentCommunicationService
+  ) {
+    this.componentCommunicationService.deleteTodo$.subscribe((item) => {
+      this.deleteTodo(item);
+    });
+  }
 
   ngOnInit(): void {
     this.http
@@ -22,11 +28,9 @@ export class AppComponent implements OnInit {
       });
   }
 
-  addTodo(): void {
+  addTodo(value: any): void {
     this.http
-      .post('https://sampletodobackend.azurewebsites.net/api/v1/todos/', {
-        value: this.input.nativeElement.value,
-      })
+      .post('https://sampletodobackend.azurewebsites.net/api/v1/todos/', value)
       .subscribe((item) => this.items.push(item));
   }
 

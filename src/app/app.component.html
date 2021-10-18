@@ -6,55 +6,13 @@
           <div class="card-body p-5">
             <h6 class="mb-3">Awesome Todo List</h6>
 
-            <div class="form-outline flex-fill">
-              <input
-                #input
-                type="text"
-                id="form1"
-                class="form-control form-control-lg"
-              />
-            </div>
-            <button
-              type="button"
-              (click)="addTodo()"
-              class="btn btn-primary btn-lg ms-2"
-            >
-              Add
-            </button>
+            <app-todo-form (todoAdded)="addTodo($event)"></app-todo-form>
 
-            <ul class="list-group mb-0">
-              <li
-                *ngFor="let item of items"
-                class="
-                  list-group-item
-                  d-flex
-                  justify-content-between
-                  align-items-center
-                  border-start-0 border-top-0 border-end-0 border-bottom
-                  rounded-0
-                  mb-2
-                "
-              >
-                <div class="d-flex align-items-center">
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    [checked]="item.done"
-                    value=""
-                    aria-label="..."
-                    (click)="markAsDone(item)"
-                  />
-                  {{ item.value }}
-                </div>
-                <button
-                  type="button"
-                  class="btn btn-danger btn-sm"
-                  (click)="deleteTodo(item)"
-                >
-                  Delete
-                </button>
-              </li>
-            </ul>
+            <app-todo-list
+              [items]="items"
+              (markedAsDone)="markAsDone($event)"
+              (deleted)="deleteTodo($event)"
+            ></app-todo-list>
           </div>
         </div>
       </div>
