@@ -2,19 +2,30 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { TodoFormComponent } from './presentational/todo-form/todo-form.component';
-import { TodoItemComponent } from './presentational/todo-item/todo-item.component';
-import { TodoListComponent } from './presentational/todo-list/todo-list.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TodoListComponent,
-    TodoFormComponent,
-    TodoItemComponent,
+  declarations: [AppComponent],
+  imports: [
+    SharedModule,
+    RouterModule.forRoot([
+      {
+        path: '',
+        redirectTo: 'todo',
+        pathMatch: 'full',
+      },
+      {
+        path: 'todo',
+        loadChildren: () =>
+          import('./todo/todo.module').then((m) => m.TodoModule),
+      },
+    ]),
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
-  imports: [BrowserModule, HttpClientModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

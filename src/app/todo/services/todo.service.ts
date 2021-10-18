@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from './../../environments/environment';
+import { environment } from '../../../environments/environment';
+import { RestService } from '../../shared/rest/rest.service';
 import { Todo } from './todo';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { Todo } from './todo';
 export class TodoService {
   private url = 'todos/';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: RestService) {}
 
   getAllTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${environment.apiUrl}${this.url}`);
